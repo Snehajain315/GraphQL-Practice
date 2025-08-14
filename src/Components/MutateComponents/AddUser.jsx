@@ -29,9 +29,9 @@ export function AddUser(){
        })
       }
       catch(error){
-        console.error(error.message)
+        console.log(error);
       }
-
+console.log(formData);  
 }
 
 
