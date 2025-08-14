@@ -1,0 +1,89 @@
+<!--STEP-1-->
+**Run the following command to install both of these packages:apolloClient and Graphql**
+
+ npm install @apollo/client graphql
+
+-----------------------------------------------------------------------------------------
+
+<!--STEP-2-->
+**Initialize ApolloClient**
+We can make another file for initialize or we can initialize it in main.jsx file.
+
+<!--Example
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+const client = new ApolloClient({
+  uri: 'https://flyby-router-demo.herokuapp.com/',
+  cache: new InMemoryCache(),
+});-->
+
+*uri specifies the URL of our GraphQL server.
+*cache is an instance of InMemoryCache, which Apollo Client uses to cache query results after fetching them.
+
+--------------------------------------------------------------------------------------------------------------
+
+<!--STEP-3-->
+**Connect your client to React**
+ApolloProvider wraps your React app and places Apollo Client on the context, enabling you to access it from anywhere in your component tree. In main.jsx, let's wrap our React app with an ApolloProvider.
+
+<!--Example
+import {ApolloProvider} from '@apollo/client';
+import {client} from './client.js;
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+root.render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+);-->
+
+--------------------------------------------------------------------------------------------------------------
+
+<!--STEP-4-->
+**Fetch data with useQuery**
+After your ApolloProvider is hooked up, you can start requesting data with useQuery. The useQuery hook is a React hook that shares GraphQL data with your UI.
+
+We can define the query we want to execute by wrapping it in the gql template literal in app.jsx or in another file.
+Syntax:-
+<!--Example
+const GET_LOCATIONS = gql`
+  query GetLocations {
+    locations {
+      id
+      name
+      description
+      photo
+    }
+  }
+`;-->
+
+Next, let's define a component named DisplayLocations that executes our GET_LOCATIONS query with the useQuery hook:
+<!--
+import { useQuery} from '@apollo/client';
+import {GET_LOCATIONS} from './....';
+
+function DisplayLocations() {
+  const { loading, error, data } = useQuery(GET_LOCATIONS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+
+  return data.locations.map(({ id, name, description, photo }) => (
+    <div key={id}>
+      <h3>{name}</h3>
+      <img width="400" height="250" alt="location-reference" src={`${photo}`} />
+      <br />
+      <b>About this location:</b>
+      <p>{description}</p>
+      <br />
+    </div>
+  ));
+}
+-->
+Now import this function in App.jsx and then render the component.
+
+
+
+
+
+
+
