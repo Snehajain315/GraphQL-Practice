@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
 
+
+//--------Main client1 APIS------------------
 const GET_COUNTRIES= gql`
  query GetList {
   countries {
@@ -10,7 +12,6 @@ const GET_COUNTRIES= gql`
   }
  }
 `
-
 export const GET_CITIES= gql`
   query GetCities($citiesId: ID!){
     cities (id: $citiesId){
@@ -30,6 +31,22 @@ export const GET_USER= gql`
    }
   }
 `
+
+//---------Client2 API-----------------------------
+export const GET_CHARACTER= gql`
+   query GetCharacter($page: Int!){
+      characters(page: $page){
+        results{
+          id
+          name
+          status
+          species
+          image
+        }
+      }
+   }
+`
+
 export default GET_COUNTRIES;
 
 
